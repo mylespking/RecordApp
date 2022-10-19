@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionStrings": {
+    "RecordAppDb": "Data Source=localhost,1433;Database=RecordApp;User Id=SA;Password=!@WebtoN123;"
+  }
+}

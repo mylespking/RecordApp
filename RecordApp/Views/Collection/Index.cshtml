@@ -1,6 +1,21 @@
-﻿@{
+﻿@model List<Album>
+
+@{
     ViewData["Title"] = "My Collection";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to show your collection.</p>
+
+<p> Count: @Model.Count()</p>
+<ul>
+    @foreach (var a in Model)
+    {
+        <li> @a.Name </li>
+        <li> @a.Artist </li>
+        <li> @a.Tracks </li>
+        <li> @a.AlbumType </li>
+        <li> @a.ReleaseDate </li>
+    }
+
+</ul>
