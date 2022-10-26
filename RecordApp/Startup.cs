@@ -28,6 +28,9 @@ namespace RecordApp
             // Add new services to specify the tables needed
             services.AddDbContext<RecordAppContext>();
 
+            // Register the repository at service layer so it can be used scoped so it can be shared within one complete scope.
+            services.AddScoped<IRecordAppRepository, RecordAppRepository>();
+
             services.AddControllersWithViews();
         }
 
