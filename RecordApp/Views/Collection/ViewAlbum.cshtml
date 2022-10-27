@@ -1,25 +1,9 @@
-﻿@using System.Linq
-@model SearchResponse
+﻿@model ViewAlbum
 
 @{
-    ViewData["Title"] = "Add To My Collection";
+    ViewData["Title"] = "Model.name";
 }
 <h1>@ViewData["Title"]</h1>
-
-<div class="flex">
-    <p>Search and add records here.</p>
-</div>
-
-@using (Html.BeginForm("Add", "Collection", FormMethod.Post))
-{
-    <div class="flex">
-        <div class="input-group rounded m-2 pr-2">
-            <input type="search" name="query" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-            <input type="submit" value="Search" class="btn btn-default mx-2" style="background-color: lightgray">
-        </div>
-    </div>
-}
-
 
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -71,7 +55,6 @@
 </style>
 
 <body>
-
 
     <div class="album py-5 bg-light">
         <div class="container">

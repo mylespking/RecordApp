@@ -52,7 +52,6 @@ namespace RecordApp.Controllers
                 
                 var body = await response.Content.ReadAsStringAsync();
 
-
                 var foobar = JsonConvert.DeserializeObject<IEnumerable<WelcomeNews>>(body);
                 return foobar;
             }
