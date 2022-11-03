@@ -1,4 +1,4 @@
-﻿@model List<CollectionAlbums>
+﻿@model List<ViewAlbum>
 
 @{
     ViewData["Title"] = "My Collection";
@@ -6,8 +6,6 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="flex">
-    <p> Count: @Model.Count()</p>
-
     <button class="btn btn-success" onclick="location.href='@Url.Action("Add", "Collection")';
     return false;" style="margin-left: auto;">
         Add Record To Collection
@@ -16,15 +14,13 @@
 
 <div class="flex">
     <div class="input-group rounded m-2 pr-2">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <input type="search" class="form-control rounded" id="search" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
         <button type="button" class="btn btn-default mx-2" style="background-color: lightgray">
             <span class="glyphicon
                 glyphicon-search"></span> Search
         </button>
     </div>
 </div>
-
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
     .bd-placeholder-img {
@@ -78,45 +74,25 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @foreach (var a in Model)
                 {
-                    <div class="col">
+                    <div class="albums col" id="individualAlbum" data-name="@a.Name" data-artist="@a.Artist" data-genre="@a.Genre" data-year="@a.ReleaseYear">
                         <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                            <img src="@a.AlbumThumb" class="p-2" alt="Album Artwork">
                             <div class="card-body">
                                 <p class="card-text">@a.Name, @a.Artist </p>
-                                <p class="card-text">Tracks: @a.Tracks, Genre: @a.AlbumType</p>
+                                <p class="card-text">Genre: @a.Genre</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='@Url.Action("ViewAlbum", "Collection", new { AlbumId = a.AlbumId })'">View</button>
                                     </div>
-                                    <small class="text-muted ml-1">@a.ReleaseDate</small>
+                                    <small class="text-muted ml-1">@a.ReleaseYear</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -129,6 +105,34 @@
         </div>
     </footer>
 
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $("#search").keyup(function ()
+        {
+            filterAlbums();
+        });
+
+        function filterAlbums() {
+            // Sets each of the search sections values to a variable
+            var search = $("#search").val();
+
+            // Gets the data in the box class and hides all the elements
+            $(".albums").hide();
+
+            // Sets variable albums equal to all the data sets that equal the function using the filter method.
+            $(".albums").filter(function () {
+                // The result from the search type bar equal to any of the data for names, artis etc or if nothing is types all are shown (not search)
+
+               if ($(this).attr("data-artist").toLowerCase().includes(search.toLowerCase()) ||
+                    $(this).attr("data-name").toLowerCase().includes(search.toLowerCase()) ||
+                    $(this).attr("data-genre").toLowerCase().includes(search.toLowerCase()) ||
+                    $(this).attr("data-year").toLowerCase().includes(search.toLowerCase())) { $(this).show()}                
+            });
+
+            if (!search)
+            {
+                $(".albums").show();
+            };
+        };
+    </script>
 
 </body>

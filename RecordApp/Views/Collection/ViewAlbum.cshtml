@@ -1,7 +1,7 @@
 ﻿@model ViewAlbum
 
 @{
-    ViewData["Title"] = "Model.name";
+    ViewData["Title"] = @Model.Name;
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -60,30 +60,52 @@
         <div class="container">
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                @if (Model!=null)
-                {
-                    @foreach (var a in Model.albums.items)
-                    {
-                        <div class="col mt-1">
-                            <div class="card shadow-sm">
-                                <img src="@a.data.coverArt.sources.First().url" class="p-2" alt="Album Artwork">
-                                <div class="card-body">
-                                    <p class="card-text">@a.data.name </p>
-                                    <p class="card-text"> @a.data.artists.items.First().profile.name </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a type="button" class="btn btn-sm btn-outline-secondary" href="@Url.Action("ViewAlbum", "Collection", new { albumName = @a.data.name, artist  = @a.data.artists.items.First().profile.name })">View</a>
-                                            <a type="button" class="btn btn-sm btn-outline-success" href="@Url.Action("AddAlbum", "Collection", new { albumName = @a.data.name, artist  = @a.data.artists.items.First().profile.name })">Add</a>
-                                        </div>
-                                        <small class="text-muted ml-1">@a.data.date.year</small>
-                                    </div>
+                <div class="col mt-1">
+                    <div class="card shadow-sm">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="@Model.AlbumThumb" alt="Album Front Cover">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="@Model.AlbumThumbBack" alt="Album Back Cover">
                                 </div>
                             </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </div>
-                    }
-                }
-            </div>
 
+
+                        <div class="card-body">
+                            <p class="card-text">@Model.Name </p>
+                            <p class="card-text"> @Model.Artist, @Model.ReleaseYear </p>
+                            <p class="card-text"> @Model.Genre, @Model.Mood, @Model.Style </p>
+                            <p class="card-text"> Description: <br /> @Model.Description </p>
+                            <p class="card-text"> Review: @Model.Score / 10 </p>
+                            <p class="card-text"> @Model.Review </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                @if (!@Model.SavedToCollection)
+                                {
+                                    <div class="btn-group">
+                                        <a type="button" class="btn btn-sm btn-outline-success" href="@Url.Action("AddAlbum", "Collection", new { artist = @Model.Artist, albumName = Model.Name })">Add</a>
+                                    </div>
+                                }
+                                <small class="text-muted ml-1">@Model.Label</small>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
         </div>
     </div>
 

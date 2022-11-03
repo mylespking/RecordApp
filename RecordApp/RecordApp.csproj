@@ -10,11 +10,16 @@
     <None Remove="Data\Entities\" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Classes\" />
+    <None Remove="jQuery" />
+    <None Remove="jQuery.UI.Combined" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Collection\" />
     <Folder Include="Data\" />
     <Folder Include="Data\Entities\" />
+    <Folder Include="Classes\" />
+    <Folder Include="wwwroot\lib\images\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.30" />
@@ -22,5 +27,66 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="jQuery" Version="3.6.0" />
+    <PackageReference Include="jQuery.UI.Combined" Version="1.13.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\images\colourfulwaveform.jpeg" />
+    <Content Remove="wwwroot\lib\images\doodles.jpeg" />
+    <Content Remove="wwwroot\lib\images\drumming.jpeg" />
+    <Content Remove="wwwroot\lib\images\drums.jpeg" />
+    <Content Remove="wwwroot\lib\images\emojis.jpeg" />
+    <Content Remove="wwwroot\lib\images\gig.jpeg" />
+    <Content Remove="wwwroot\lib\images\headphones.jpeg" />
+    <Content Remove="wwwroot\lib\images\headphonesdancing.jpeg" />
+    <Content Remove="wwwroot\lib\images\listening.jpeg" />
+    <Content Remove="wwwroot\lib\images\listeningalone.jpeg" />
+    <Content Remove="wwwroot\lib\images\livegig.jpeg" />
+    <Content Remove="wwwroot\lib\images\microphone.jpeg" />
+    <Content Remove="wwwroot\lib\images\mistygig.jpeg" />
+    <Content Remove="wwwroot\lib\images\mixingbooth.jpeg" />
+    <Content Remove="wwwroot\lib\images\musicsymbols.jpeg" />
+    <Content Remove="wwwroot\lib\images\notes.jpeg" />
+    <Content Remove="wwwroot\lib\images\poprecord.jpeg" />
+    <Content Remove="wwwroot\lib\images\recordrip.jpeg" />
+    <Content Remove="wwwroot\lib\images\Records.jpeg" />
+    <Content Remove="wwwroot\lib\images\recordshop.jpeg" />
+    <Content Remove="wwwroot\lib\images\recordwaveforms.jpeg" />
+    <Content Remove="wwwroot\lib\images\red.jpeg" />
+    <Content Remove="wwwroot\lib\images\speaker.jpeg" />
+    <Content Remove="wwwroot\lib\images\speakers.jpeg" />
+    <Content Remove="wwwroot\lib\images\waveformverticalline.jpeg" />
+    <Content Remove="wwwroot\lib\images\waves.jpeg" />
+    <Content Remove="wwwroot\lib\images\winterlistening.jpeg" />
+    <Content Remove="wwwroot\lib\images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\images\colourfulwaveform.jpeg" />
+    <None Include="wwwroot\lib\images\doodles.jpeg" />
+    <None Include="wwwroot\lib\images\drumming.jpeg" />
+    <None Include="wwwroot\lib\images\drums.jpeg" />
+    <None Include="wwwroot\lib\images\emojis.jpeg" />
+    <None Include="wwwroot\lib\images\gig.jpeg" />
+    <None Include="wwwroot\lib\images\headphones.jpeg" />
+    <None Include="wwwroot\lib\images\headphonesdancing.jpeg" />
+    <None Include="wwwroot\lib\images\listening.jpeg" />
+    <None Include="wwwroot\lib\images\listeningalone.jpeg" />
+    <None Include="wwwroot\lib\images\livegig.jpeg" />
+    <None Include="wwwroot\lib\images\microphone.jpeg" />
+    <None Include="wwwroot\lib\images\mistygig.jpeg" />
+    <None Include="wwwroot\lib\images\mixingbooth.jpeg" />
+    <None Include="wwwroot\lib\images\musicsymbols.jpeg" />
+    <None Include="wwwroot\lib\images\notes.jpeg" />
+    <None Include="wwwroot\lib\images\poprecord.jpeg" />
+    <None Include="wwwroot\lib\images\recordrip.jpeg" />
+    <None Include="wwwroot\lib\images\Records.jpeg" />
+    <None Include="wwwroot\lib\images\recordshop.jpeg" />
+    <None Include="wwwroot\lib\images\recordwaveforms.jpeg" />
+    <None Include="wwwroot\lib\images\red.jpeg" />
+    <None Include="wwwroot\lib\images\speaker.jpeg" />
+    <None Include="wwwroot\lib\images\speakers.jpeg" />
+    <None Include="wwwroot\lib\images\waveformverticalline.jpeg" />
+    <None Include="wwwroot\lib\images\waves.jpeg" />
+    <None Include="wwwroot\lib\images\winterlistening.jpeg" />
   </ItemGroup>
 </Project>

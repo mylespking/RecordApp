@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using RecordApp.Data.Entities;
 using RecordsApp.Data.Entities;
 
 namespace RecordApp.Data
@@ -17,9 +16,7 @@ namespace RecordApp.Data
 
         // Set Tables in Database
         public DbSet<Album> Album { get; set; }
-        public DbSet<UserDetail> Users { get; set; }
-        public DbSet<UserAlbumMapping> UserAlbums { get; set; }
-
+        
         // Add constructor to configure to database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

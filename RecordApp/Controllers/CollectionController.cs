@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using RecordApp.Classes;
 using RecordApp.Data;
 using RecordApp.Models;
 
@@ -59,8 +60,31 @@ namespace RecordApp.Controllers
             return View();
         }
 
-        public async Task<ActionResult> ViewAlbum(string albumName, string artist)
+        public async Task<ActionResult> ViewAlbum(string? artist, string? albumName, int? AlbumId)
         {
+            if (AlbumId != null)
+            {
+                var desco = _repository.GetAlbum((int)AlbumId).First();
+
+                var ownAlbum = new ViewAlbum
+                {
+                    Name = desco.Name,
+                    Artist = desco.Artist,
+                    ReleaseYear = desco.ReleaseYear,
+                    Label  = desco.Label,
+                    Score = desco.Score,
+                    AlbumThumb = desco.AlbumThumb,
+                    AlbumThumbBack = desco.AlbumThumbBack,
+                    Description = desco.Description.Replace("$./;$*", System.Environment.NewLine),
+                    Genre = desco.Genre,
+                    Mood = desco.Mood,
+                    Review = desco.Review,
+                    Style = desco.Style
+                };
+
+                return View(ownAlbum);
+            }
+
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
@@ -77,13 +101,85 @@ namespace RecordApp.Controllers
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
                 var foobar = JsonConvert.DeserializeObject<AUdatabasesearch>(body);
-                return View(foobar);
+
+                var mapping = foobar.album.First();
+
+                // add db search for this 
+                var savedToCollection = false;
+                var toReturn = new ViewAlbum
+                {
+                    Name = mapping.strAlbum,
+                    Artist = mapping.strArtist,
+                    ReleaseYear = mapping.intYearReleased,
+                    Label = mapping.strLabel,
+                    Score = mapping.intScore,
+                    AlbumThumb = mapping.strAlbumThumb,
+                    AlbumThumbBack = mapping.strAlbumThumbBack,
+                    Description = mapping.strDescriptionEN,
+                    Genre = mapping.strGenre,
+                    Mood = mapping.strMood,
+                    Review = mapping.strReview,
+                    Style = mapping.strStyle,
+                    SavedToCollection = savedToCollection
+                };
+
+                return View(toReturn);
             }
         }
 
-        public async Task<ActionResult> AddAlbum(string albumName)
+        public async Task<ActionResult> AddAlbum(string artist, string albumName)
         {
-            return View();
+            try
+            {
+                //await _repository.AddAlbums(model);
+
+                //return RedirectToAction("Index").FlashSuccess(this, $"Album added successfully");
+
+                var client = new HttpClient();
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri($"https://theaudiodb.p.rapidapi.com/searchalbum.php?s={artist}&a={albumName}"),
+                    Headers =
+                    {
+                        { "X-RapidAPI-Key", "ec94972663msh845a225b632210ap19fd3djsnb875add99aa7" },
+                        { "X-RapidAPI-Host", "theaudiodb.p.rapidapi.com" },
+                    },
+                };
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = await response.Content.ReadAsStringAsync();
+                    var foobar = JsonConvert.DeserializeObject<AUdatabasesearch>(body);
+
+                    var mapping = foobar.album.First();
+
+                    // add db search for this 
+                    var toAdd = new ViewAlbum
+                    {
+                        Name = mapping.strAlbum,
+                        Artist = mapping.strArtist,
+                        ReleaseYear = mapping.intYearReleased,
+                        Label = mapping.strLabel,
+                        Score = mapping.intScore,
+                        AlbumThumb = mapping.strAlbumThumb,
+                        AlbumThumbBack = mapping.strAlbumThumbBack,
+                        Description = mapping.strDescriptionEN,
+                        Genre = mapping.strGenre,
+                        Mood = mapping.strMood,
+                        Review = mapping.strReview,
+                        Style = mapping.strStyle,
+                        SavedToCollection = true
+                    };
+
+                    await _repository.AddAlbums(toAdd);
+                }
+                    return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

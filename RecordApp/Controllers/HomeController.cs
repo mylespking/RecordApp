@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using RecordApp.Data;
 using RecordApp.Models;
 using RecordsApp.Data.Entities;
 
@@ -25,6 +27,15 @@ namespace RecordApp.Controllers
         {
             // api controller return getNews()
             var news = await GetNews();
+
+            foreach(var article in news)
+            {
+                var rand = new Random();
+                var imagesInFolder = Directory.GetFiles("wwwroot/lib/images", "*.jpeg");
+                var randomImage = imagesInFolder[rand.Next(imagesInFolder.Length)].ToString();
+                article.image = randomImage.Remove(0, 7);
+            }
+
             return View(news);
         }
 
