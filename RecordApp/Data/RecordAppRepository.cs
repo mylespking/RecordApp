@@ -52,10 +52,10 @@ namespace RecordApp.Data
             return dataresults;
         }
 
-        public IEnumerable<ViewAlbum> GetAlbum(int AlbumId)
+        public IEnumerable<ViewAlbum> GetAlbum(int albumId)
         {
             IEnumerable<ViewAlbum> albumData =
-                _ctx.Album.Where(x => x.AlbumId == AlbumId)
+                _ctx.Album.Where(x => x.AlbumId == albumId)
                 .Select(x =>
                     new ViewAlbum
                     {
@@ -100,6 +100,25 @@ namespace RecordApp.Data
             try
             {
                 _ctx.Album.Add(dataToAdd);
+                await _ctx.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // Test this 
+        public async Task<bool> DeleteAlbum (int albumId)
+        {
+            try
+            {
+                var toDelete = new Album { AlbumId = albumId };
+
+                _ctx.Album.Attach(toDelete);
+                _ctx.Album.Remove(toDelete);
                 await _ctx.SaveChangesAsync();
 
                 return true;

@@ -1,63 +1,57 @@
-﻿@model IEnumerable<WelcomeNews>
+﻿@model List<WelcomeNews>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 <h1>@ViewData["Title"]</h1>
 
-<div class="flex">
-    <p> Count: @Model.Count()</p>
-</div>
-
 <style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-    }
+    @*#newsBox:hover {
+        border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
+        border-width: 4px;
+        border-style: solid;
+        border-radius: 5 px;
+    }*@
 
-    .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-    }
-
-    .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-    }
-
-    .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-    }
-
-    .nav-scroller {
+    #newsBox {
         position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
+        display: inline-block;
+        background-image: linear-gradient(291deg, #ffb37c, #f9514f);
+        padding: 0 20px;
+        line-height: 30px;
+        text-align: center;
+        color: #485564;
+        border-radius: 6px;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 0;
+        opacity: 0;
     }
 
-        .nav-scroller .nav {
-            display: flex;
-            flex-wrap: nowrap;
-            padding-bottom: 1rem;
-            margin-top: -1px;
-            overflow-x: auto;
-            text-align: center;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
+    #newsBox:before {
+        content: '';
+        position: absolute;
+        /* specify the value of border width here */
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        left: 1px;
+        /* --- */
+        background-color: #fff;
+        border-radius: 5px;
+        box-sizing: border-box;
+        z-index: -1;
+    }
+
+    #newsBox:hover {
+        opacity: 1;
+    }
+
+
 </style>
 
 <body>
-
 
     <div class="album py-5 bg-light">
         <div class="container">
@@ -65,21 +59,25 @@
 
                 @foreach (var a in Model)
                 {
-                    <div class="col-6 mt-2">
-                        <div class="h-100 card shadow-sm">
-                            <a class="bd-placeholder-img card-img-top" href="@a.url" target="_blank">
-                                <img src="@a.image" class="img-thumbnail" alt="News Article Photo" />
-                            </a>
+                <div class="col-6 mt-2">
+                    <a href="@a.url" target="_blank">
+                        <div class="h-100 card shadow-sm" id="newsBox">
+                            <img src="@a.image" class="img-thumbnail mt-3" alt="News Article Photo" />
                             <div class="card-body">
                                 <p class="card-text"> @a.title</p>
                                 <small class="text-muted ml-1">@a.source</small>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
                 }
 
             </div>
         </div>
+    </div>
+
+    <div class="flex">
+        <p> Count: @Model.Count()</p>
     </div>
 
     <footer class="text-muted py-5">

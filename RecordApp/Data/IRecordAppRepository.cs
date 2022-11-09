@@ -8,7 +8,8 @@ namespace RecordApp.Data
     public interface IRecordAppRepository
     {
         IEnumerable<ViewAlbum> GetAlbums();
-        IEnumerable<ViewAlbum> GetAlbum(int AlbumId);
+        IEnumerable<ViewAlbum> GetAlbum(int albumId);
         Task<bool> AddAlbums(ViewAlbum model);
+        Task<bool> DeleteAlbum(int albumId);
     }
 }

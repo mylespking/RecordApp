@@ -89,7 +89,7 @@
                                     <p class="card-text"> @a.data.artists.items.First().profile.name </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a type="button" class="btn btn-sm btn-outline-secondary" href="@Url.Action("ViewAlbum", "Collection", new { artist  = @a.data.artists.items.First().profile.name, albumName = @a.data.name })">View</a>
+                                            <a type="button" class="btn btn-sm btn-outline-secondary" href="@Url.Action("ViewAlbum", "Collection", new { artist  = @a.data.artists.items.First().profile.name, albumName = @a.data.name, searchQuery = Model.searchQuery })">View</a>
                                             <a type="button" class="btn btn-sm btn-outline-success" href="@Url.Action("AddAlbum", "Collection", new { albumName = @a.data.name, artist  = @a.data.artists.items.First().profile.name })">Add</a>
                                         </div>
                                         <small class="text-muted ml-1">@a.data.date.year</small>

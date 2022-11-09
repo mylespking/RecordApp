@@ -19,5 +19,6 @@ namespace RecordApp.Models
         public string Review { get; set; }
         public string Style { get; set; }
         public bool SavedToCollection { get; set; }
+        public string SearchQuery { get; set; }
     }
 }

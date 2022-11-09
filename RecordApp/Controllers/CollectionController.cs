@@ -53,6 +53,7 @@ namespace RecordApp.Controllers
                     response.EnsureSuccessStatusCode();
                     var body = await response.Content.ReadAsStringAsync();
                     var foobar = JsonConvert.DeserializeObject<SearchResponse>(body);
+                    foobar.searchQuery = query;
                     return View(foobar);
                 }
             }
@@ -60,11 +61,11 @@ namespace RecordApp.Controllers
             return View();
         }
 
-        public async Task<ActionResult> ViewAlbum(string? artist, string? albumName, int? AlbumId)
+        public async Task<ActionResult> ViewAlbum(string? artist, string? albumName, int? albumId, string? searchQuery)
         {
-            if (AlbumId != null)
+            if (albumId != null)
             {
-                var desco = _repository.GetAlbum((int)AlbumId).First();
+                var desco = _repository.GetAlbum((int)albumId).First();
 
                 var ownAlbum = new ViewAlbum
                 {
@@ -79,11 +80,21 @@ namespace RecordApp.Controllers
                     Genre = desco.Genre,
                     Mood = desco.Mood,
                     Review = desco.Review,
-                    Style = desco.Style
+                    Style = desco.Style,
+                    SavedToCollection = desco.SavedToCollection
                 };
 
                 return View(ownAlbum);
             }
+
+            // Remove (Deluxe Edition) or (Remastered) so that the Audio DB can get info about the album
+            if (albumName.ToLower().Contains("deluxe") || albumName.ToLower().Contains("remastered"))
+            {
+                var firstBracket = albumName.IndexOf("(");
+                var cutAmount = albumName.IndexOf(")") - (firstBracket - 1);
+                albumName = albumName.Remove(firstBracket, cutAmount);
+            }
+
 
             var client = new HttpClient();
             var request = new HttpRequestMessage
@@ -105,7 +116,6 @@ namespace RecordApp.Controllers
                 var mapping = foobar.album.First();
 
                 // add db search for this 
-                var savedToCollection = false;
                 var toReturn = new ViewAlbum
                 {
                     Name = mapping.strAlbum,
@@ -120,8 +130,11 @@ namespace RecordApp.Controllers
                     Mood = mapping.strMood,
                     Review = mapping.strReview,
                     Style = mapping.strStyle,
-                    SavedToCollection = savedToCollection
+                    SavedToCollection = false
                 };
+
+                // Add search query for back button logic
+                toReturn.SearchQuery = searchQuery;
 
                 return View(toReturn);
             }
@@ -131,9 +144,6 @@ namespace RecordApp.Controllers
         {
             try
             {
-                //await _repository.AddAlbums(model);
-
-                //return RedirectToAction("Index").FlashSuccess(this, $"Album added successfully");
 
                 var client = new HttpClient();
                 var request = new HttpRequestMessage
@@ -182,7 +192,13 @@ namespace RecordApp.Controllers
             }
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<ActionResult> DeleteAlbum(int albumId)
+        {
+            await _repository.DeleteAlbum(albumId);
+            return RedirectToAction("Index");
+        }
+
+            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

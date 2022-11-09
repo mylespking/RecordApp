@@ -45,7 +45,7 @@ namespace RecordApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<WelcomeNews>> GetNews()
+        public async Task<List<WelcomeNews>> GetNews()
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage
@@ -64,7 +64,11 @@ namespace RecordApp.Controllers
                 var body = await response.Content.ReadAsStringAsync();
 
                 var foobar = JsonConvert.DeserializeObject<IEnumerable<WelcomeNews>>(body);
-                return foobar;
+
+                // Filter data to remove articles from some sources as title has html embedded in it which looks horrible
+                var newsData = foobar.Where(d => d.source != "kerrang" && d.source != "mtv").ToList();
+
+                return newsData;
             }
         }
 

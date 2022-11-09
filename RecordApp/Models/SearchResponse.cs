@@ -9,7 +9,8 @@ namespace RecordApp.Models
 
         public string query { get; set; }
         public Albums albums { get; set; }
-        
+        public string searchQuery { get; set; }
+
         public class Albums
         {
             public int totalCount { get; set; }
