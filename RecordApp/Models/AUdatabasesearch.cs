@@ -7,7 +7,6 @@ namespace RecordApp.Models
     {
         public List<Album> album { get; set; }
 
-        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
         public class Album
         { 
             public string idAlbum { get; set; }

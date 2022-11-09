@@ -6,6 +6,8 @@
 <h1>@ViewData["Title"]</h1>
 
 <style>
+    @* Working set a highlighted border on hover with rounded corners *@ 
+
     @*#newsBox:hover {
         border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
         border-width: 4px;
@@ -26,7 +28,6 @@
         font-size: 14px;
         font-weight: 600;
         z-index: 0;
-        opacity: 0;
     }
 
     #newsBox:before {
@@ -52,11 +53,9 @@
 </style>
 
 <body>
-
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
                 @foreach (var a in Model)
                 {
                 <div class="col-6 mt-2">

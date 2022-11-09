@@ -20,6 +20,7 @@ namespace RecordApp.Data
             _logger = logger;
         }
 
+        // Method to retrieve all albums from the local database
         public IEnumerable<ViewAlbum> GetAlbums()
         {
             var albumData = _ctx.Album.ToList();
@@ -52,6 +53,7 @@ namespace RecordApp.Data
             return dataresults;
         }
 
+        // Method to retrieve single album from database
         public IEnumerable<ViewAlbum> GetAlbum(int albumId)
         {
             IEnumerable<ViewAlbum> albumData =
@@ -78,6 +80,7 @@ namespace RecordApp.Data
             return albumData;
         }
 
+        // Methoid to add album to the album table
         public async Task<bool> AddAlbums(ViewAlbum model)
         {
             var dataToAdd = new Album
@@ -89,6 +92,8 @@ namespace RecordApp.Data
                 Score = model.Score,
                 AlbumThumb = model.AlbumThumb,
                 AlbumThumbBack = model.AlbumThumbBack,
+                // Replace function used to keep source formatting of paragraphing and spacing
+                // !!!!!!!!! Needs more work !!!!!!!!!!!!
                 Description = model.Description.Replace("\n", "$./;$*"),
                 Genre = model.Genre,
                 Mood = model.Mood,
@@ -110,7 +115,7 @@ namespace RecordApp.Data
             }
         }
 
-        // Test this 
+        // Method to delete album from the table 
         public async Task<bool> DeleteAlbum (int albumId)
         {
             try

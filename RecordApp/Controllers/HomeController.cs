@@ -23,16 +23,22 @@ namespace RecordApp.Controllers
             _logger = logger;
         }
 
+        // Method which opens the home page showing the latest music news using the music news api
         public async Task<IActionResult> IndexAsync()
         {
             // api controller return getNews()
             var news = await GetNews();
 
+            // method to add an image to each news article so page looks better
             foreach(var article in news)
             {
+                // generate a random number 
                 var rand = new Random();
+                // get locally stored images from the images file 
                 var imagesInFolder = Directory.GetFiles("wwwroot/lib/images", "*.jpeg");
+                // select a random image using the randomly generated number
                 var randomImage = imagesInFolder[rand.Next(imagesInFolder.Length)].ToString();
+                // remove the file path start (wwwroot) so image can be found 
                 article.image = randomImage.Remove(0, 7);
             }
 
@@ -44,6 +50,7 @@ namespace RecordApp.Controllers
             return View();
         }
 
+        // Method to get data from the news API 
         [HttpGet]
         public async Task<List<WelcomeNews>> GetNews()
         {
@@ -62,11 +69,10 @@ namespace RecordApp.Controllers
             {
                 
                 var body = await response.Content.ReadAsStringAsync();
-
-                var foobar = JsonConvert.DeserializeObject<IEnumerable<WelcomeNews>>(body);
+                var deserializedData = JsonConvert.DeserializeObject<IEnumerable<WelcomeNews>>(body);
 
                 // Filter data to remove articles from some sources as title has html embedded in it which looks horrible
-                var newsData = foobar.Where(d => d.source != "kerrang" && d.source != "mtv").ToList();
+                var newsData = deserializedData.Where(d => d.source != "kerrang" && d.source != "mtv").ToList();
 
                 return newsData;
             }

@@ -5,8 +5,6 @@ namespace RecordApp.Models
 {
     public class SearchResponse
     {
-        // Root myDeserializedClass = JsonConvert.DeserializeObject<SearchResponse>(myJsonResponse);
-
         public string query { get; set; }
         public Albums albums { get; set; }
         public string searchQuery { get; set; }

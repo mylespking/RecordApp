@@ -25,6 +25,7 @@ namespace RecordApp.Controllers
             _logger = logger;
         }
 
+        // API to get opening page music news from music-news-API
         [HttpGet]
         public async Task<IEnumerable<News>> GetNews()
         {
@@ -41,40 +42,12 @@ namespace RecordApp.Controllers
             };
             using (var response = await client.SendAsync(request))
             {
-                var foobar = JsonConvert.DeserializeObject<IEnumerable<News>>(response.ToString());
-                return foobar;
-
-                    //response.EnsureSuccessStatusCode();
-                    //var body = await response.Content.ReadAsStringAsync();
-                    //Console.WriteLine(body);
-
-                    //var dataresults = new List<News>();
-
-                    //foreach (var n in response.Content)
-                    //{
-                    //    var Data = new News
-                    //    {
-                    //        Title = n.title,
-                    //        Url = n.url,
-                    //        Source = n.source
-                    //    };
-
-                    //    dataresults.Add(Data);
-                    //}
-
-                    //return dataresults;
-
-                    //return response.Content.Select(x => new News
-                    //{
-                    //    Title = x.title,
-                    //    Url = x.url,
-                    //    Source = x.source
-                    //});
-
+                var deserializedData = JsonConvert.DeserializeObject<IEnumerable<News>>(response.ToString());
+                return deserializedData;   
             }
-            
         }
 
+        // API to search for albums on the spotify database using their API
         public async Task<dynamic> SpotifySearch(string searchString)
         {
             var client = new HttpClient();
@@ -91,14 +64,12 @@ namespace RecordApp.Controllers
             using (var response = await client.SendAsync(request))
             {
                 response.EnsureSuccessStatusCode();
-                //var body = await response.Content.ReadAsStringAsync();
-                //Console.WriteLine(body);
                 return response;
             }
         }
 
-
-        public async Task<dynamic> GetAudioBdApiData(string albumName)
+        // API to get data about specific albums for the View Album page
+        public async Task<dynamic> GetAudioDBApiData(string albumName)
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage
@@ -114,8 +85,6 @@ namespace RecordApp.Controllers
             using (var response = await client.SendAsync(request))
             {
                 response.EnsureSuccessStatusCode();
-                //var body = await response.Content.ReadAsStringAsync();
-                //Console.WriteLine(body);
                 return response;
             }
         }

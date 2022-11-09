@@ -19,7 +19,7 @@ namespace RecordApp
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            // Add in so we can sqwitch between Dev and PRD environments
+            // Add in so we can switch between Dev and PRD environments if needed
                 .ConfigureAppConfiguration(AddConfiguration)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

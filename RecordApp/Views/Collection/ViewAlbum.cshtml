@@ -7,12 +7,14 @@
 
 <body>
 
+    @* If saved to collection is false (Not in the users colleciton) then the back button will return to the search as that is where they must have come from*@ 
     @if (@Model.SavedToCollection == false)
     {
         <div class="btn-group">
             <a type="button" class="btn btn-sm btn-outline-primary" href="@Url.Action("Add", "Collection", new { query =  Model.SearchQuery })">Back</a>
         </div>
     }
+    @* If the record is in the collection the back button will return to the collection page as that must be where they came from *@
     else
     {
         <div class="btn-group">
@@ -35,6 +37,7 @@
                                 <div class="carousel-item active">
                                     <img class="d-block w-100" src="@Model.AlbumThumb" alt="Album Front Cover">
                                 </div>
+                                @* Add in album back if the image is available *@
                                 @if (Model.AlbumThumbBack != null)
                                 {
                                     <div class="carousel-item">
@@ -57,6 +60,7 @@
                             <p class="card-text">@Model.Name </p>
                             <p class="card-text"> @Model.Artist, @Model.ReleaseYear </p>
                             <p class="card-text"> @Model.Genre
+                             @* Checks to see if data is available and shows it if it is *@
                                 @if (@Model.Style != null)
                                 {
                                     @(", " + Model.Style)
@@ -79,6 +83,7 @@
                                 <p class="card-text"> @Model.Review </p>
                             }
                             <div class="d-flex justify-content-between align-items-center">
+                                @* Logic similar to the back button where if the album is in collection it can be deleted if not it can be added *@
                                 @if (@Model.SavedToCollection == false)
                                 {
                                     <div class="btn-group">

@@ -23,8 +23,6 @@
 </div>
 
 <body>
-
-
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -66,22 +64,22 @@
         });
 
         function filterAlbums() {
-            // Sets each of the search sections values to a variable
+            // Sets search value to a variable
             var search = $("#search").val();
 
-            // Gets the data in the box class and hides all the elements
+            // Gets the data in the album class and hides all the elements
             $(".albums").hide();
 
-            // Sets variable albums equal to all the data sets that equal the function using the filter method.
+            // Sets variable albums equal to all the albums that equal the function using the filter method.
             $(".albums").filter(function () {
-                // The result from the search type bar equal to any of the data for names, artis etc or if nothing is types all are shown (not search)
-
+                // Check to see if artist, name, genre or year match the search criteria and sets the album to show if true
                if ($(this).attr("data-artist").toLowerCase().includes(search.toLowerCase()) ||
                     $(this).attr("data-name").toLowerCase().includes(search.toLowerCase()) ||
                     $(this).attr("data-genre").toLowerCase().includes(search.toLowerCase()) ||
                     $(this).attr("data-year").toLowerCase().includes(search.toLowerCase())) { $(this).show()}                
             });
 
+            // Show all albums in collection if search is empty
             if (!search)
             {
                 $(".albums").show();
