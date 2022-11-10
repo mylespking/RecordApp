@@ -6,10 +6,6 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<div class="flex">
-    <p>Search and add records here.</p>
-</div>
-
 @using (Html.BeginForm("Add", "Collection", FormMethod.Post))
 {
     <div class="flex">
@@ -23,14 +19,14 @@
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <body>
-    <div class="album py-5 bg-light">
+    <div class="album py-1 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                @if (Model!=null)
+                @if (Model != null)
                 {
                     @foreach (var a in Model.albums.items)
                     {
-                        <div class="col mt-1">
+                        <div class="col mt-1" id="itemBox">
                             <div class="card shadow-sm">
                                 <img src="@a.data.coverArt.sources.First().url" class="p-2" alt="Album Artwork">
                                 <div class="card-body">
@@ -39,7 +35,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <a type="button" class="btn btn-sm btn-outline-secondary" href="@Url.Action("ViewAlbum", "Collection", new { artist  = @a.data.artists.items.First().profile.name, albumName = @a.data.name, searchQuery = Model.searchQuery })">View</a>
-                                            <a type="button" class="btn btn-sm btn-outline-success" href="@Url.Action("AddAlbum", "Collection", new { albumName = @a.data.name, artist  = @a.data.artists.items.First().profile.name })">Add</a>
+                                            <a type="button" class="btn btn-sm btn-outline-success" href="@Url.Action("AddAlbum", "Collection", new { artist  = @a.data.artists.items.First().profile.name , albumName = @a.data.name })">Add</a>
                                         </div>
                                         <small class="text-muted ml-1">@a.data.date.year</small>
                                     </div>
@@ -52,14 +48,17 @@
         </div>
     </div>
 
-    <footer class="text-muted py-5">
-        <div class="container">
-            <p class="float-end mb-1">
-                <a href="#">Back to top</a>
-            </p>
-        </div>
-    </footer>
+    @if (Model != null)
+    {
+        <footer class="text-muted py-1">
+            <div class="container">
+                <p class="float-end mb-1">
+                    <a href="#">Back to top</a>
+                </p>
+            </div>
+        </footer>
+    }
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
+    </body>

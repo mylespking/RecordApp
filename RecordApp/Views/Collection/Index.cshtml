@@ -3,18 +3,19 @@
 @{
     ViewData["Title"] = "My Collection";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="d-flex justify-content-between">
+    <h1>@ViewData["Title"]</h1>
 
-<div class="flex">
-    <button class="btn btn-success" onclick="location.href='@Url.Action("Add", "Collection")';
-    return false;" style="margin-left: auto;">
-        Add Record To Collection
-    </button>
+    <div class="flex py-3">
+        <button class="btn btn-success" onclick="location.href='@Url.Action("Add", "Collection")'; return false;" style="margin-left: auto;">
+            Add Record To Collection
+        </button>
+    </div>
 </div>
 
 <div class="flex">
     <div class="input-group rounded m-2 pr-2">
-        <input type="search" class="form-control rounded" id="search" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <input type="search" class="form-control rounded" id="search" placeholder="Search my collection" aria-label="Search" aria-describedby="search-addon" />
         <button type="button" class="btn btn-default mx-2" style="background-color: lightgray">
             <span class="glyphicon
                 glyphicon-search"></span> Search
@@ -23,16 +24,16 @@
 </div>
 
 <body>
-    <div class="album py-5 bg-light">
+    <div class="album py-2 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @foreach (var a in Model)
                 {
-                    <div class="albums col" id="individualAlbum" data-name="@a.Name" data-artist="@a.Artist" data-genre="@a.Genre" data-year="@a.ReleaseYear">
+                    <div class="albums col" id="itemBox" data-name="@a.Name" data-artist="@a.Artist" data-genre="@a.Genre" data-year="@a.ReleaseYear">
                         <div class="card shadow-sm">
                             <img src="@a.AlbumThumb" class="p-2" alt="Album Artwork">
                             <div class="card-body">
-                                <p class="card-text">@a.Name, @a.Artist </p>
+                                <p class="card-text font-weight-bold">@a.Name, @a.Artist </p>
                                 <p class="card-text">Genre: @a.Genre</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
@@ -49,7 +50,7 @@
         </div>
     </div>
 
-    <footer class="text-muted py-5">
+    <footer class="text-muted py-2">
         <div class="container">
             <p class="float-end mb-1">
                 <a href="#">Back to top</a>

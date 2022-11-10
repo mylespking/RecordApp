@@ -22,7 +22,7 @@
         </div>
     }
 
-    <div class="album py-5 bg-light">
+    <div class="album py-2 bg-light">
         <div class="container">
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -57,7 +57,7 @@
 
 
                         <div class="card-body">
-                            <p class="card-text">@Model.Name </p>
+                            <p class="card-text font-weight-bold">@Model.Name </p>
                             <p class="card-text"> @Model.Artist, @Model.ReleaseYear </p>
                             <p class="card-text"> @Model.Genre
                              @* Checks to see if data is available and shows it if it is *@
@@ -72,11 +72,11 @@
                             }
                             @if (Model.Description != null)
                             {
-                                <p class="card-text"> Description: <br /> @Model.Description </p>
+                                <p class="card-text font-weight-bold"> Description: </p><br /> <p>@Model.Description </p>
                             }
                             @if (Model.Score != null)
                             {
-                                <p class="card-text"> Review: @Model.Score / 10 </p>
+                                <p class="card-text font-weight-bold"> Review: </p><p>@Model.Score / 10 </p>
                             }
                             @if (Model.Review != null)
                             {

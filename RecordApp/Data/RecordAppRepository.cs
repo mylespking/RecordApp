@@ -83,27 +83,27 @@ namespace RecordApp.Data
         // Methoid to add album to the album table
         public async Task<bool> AddAlbums(ViewAlbum model)
         {
-            var dataToAdd = new Album
-            {
-                Name = model.Name,
-                Artist = model.Artist,
-                ReleaseYear = model.ReleaseYear,
-                Label = model.Label,
-                Score = model.Score,
-                AlbumThumb = model.AlbumThumb,
-                AlbumThumbBack = model.AlbumThumbBack,
-                // Replace function used to keep source formatting of paragraphing and spacing
-                // !!!!!!!!! Needs more work !!!!!!!!!!!!
-                Description = model.Description.Replace("\n", "$./;$*"),
-                Genre = model.Genre,
-                Mood = model.Mood,
-                Review = model.Review,
-                Style = model.Style,
-                SavedToCollection = true
-            };
-
             try
             {
+                var dataToAdd = new Album
+                {
+                    Name = model.Name,
+                    Artist = model.Artist,
+                    ReleaseYear = model.ReleaseYear,
+                    Label = model.Label,
+                    Score = model.Score,
+                    AlbumThumb = model.AlbumThumb,
+                    AlbumThumbBack = model.AlbumThumbBack,
+                    // Replace function used to keep source formatting of paragraphing and spacing
+                    // !!!!!!!!! Needs more work !!!!!!!!!!!!
+                    Description = model.Description.Replace("\n", "$./;$*") ?? null,
+                    Genre = model.Genre,
+                    Mood = model.Mood,
+                    Review = model.Review,
+                    Style = model.Style,
+                    SavedToCollection = true
+                };
+
                 _ctx.Album.Add(dataToAdd);
                 await _ctx.SaveChangesAsync();
 

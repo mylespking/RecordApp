@@ -87,7 +87,7 @@ namespace RecordApp.Controllers
                     AlbumThumbBack = dbAlbumData.AlbumThumbBack,
                     // Replace function used to keep source formatting of paragraphing and spacing
                     // !!!!!!!!! Needs more work !!!!!!!!!!!!
-                    Description = dbAlbumData.Description.Replace("$./;$*", System.Environment.NewLine),
+                    Description = dbAlbumData.Description.Replace("$./;$*", System.Environment.NewLine) ?? null,
                     Genre = dbAlbumData.Genre,
                     Mood = dbAlbumData.Mood,
                     Review = dbAlbumData.Review,
@@ -155,6 +155,14 @@ namespace RecordApp.Controllers
         {
             try
             {
+                // Remove (Deluxe Edition) or (Remastered) so that the Audio DB can get info about the album
+                if (albumName.ToLower().Contains("deluxe") || albumName.ToLower().Contains("remastered"))
+                {
+                    var firstBracket = albumName.IndexOf("(");
+                    var cutAmount = albumName.IndexOf(")") - (firstBracket - 1);
+                    albumName = albumName.Remove(firstBracket, cutAmount);
+                }
+
                 var client = new HttpClient();
                 var request = new HttpRequestMessage
                 {
