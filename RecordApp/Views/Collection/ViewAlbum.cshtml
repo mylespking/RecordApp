@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = @Model.Name;
 }
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-white">@ViewData["Title"]</h1>
 
-<body>
+<body style="background-color: #181718;">
 
     @* If saved to collection is false (Not in the users colleciton) then the back button will return to the search as that is where they must have come from*@ 
     @if (@Model.SavedToCollection == false)
@@ -22,7 +22,7 @@
         </div>
     }
 
-    <div class="album py-2 bg-light">
+    <div class="album py-2 bg-dark">
         <div class="container">
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

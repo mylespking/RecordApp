@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Add To My Collection";
 }
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-white">@ViewData["Title"]</h1>
 
 @using (Html.BeginForm("Add", "Collection", FormMethod.Post))
 {
@@ -18,8 +18,8 @@
 
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<body>
-    <div class="album py-1 bg-light">
+<body style="background-color: #181718;">
+    <div class="album py-1 bg-dark">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @if (Model != null)
@@ -27,7 +27,7 @@
                     @foreach (var a in Model.albums.items)
                     {
                         <div class="col mt-1" id="itemBox">
-                            <div class="card shadow-sm">
+                            <div class="card shadow-sm" id="dataBox">
                                 <img src="@a.data.coverArt.sources.First().url" class="p-2" alt="Album Artwork">
                                 <div class="card-body">
                                     <p class="card-text">@a.data.name </p>
